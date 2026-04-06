@@ -5,7 +5,7 @@
 const SESSIONS = [
   {
     name: "Autumn 2026",
-    color: "#e8845a",
+    color: "#e4002b",
     weeks: [
       { label: "Week 1",  start: "2026-03-02", end: "2026-03-06" },
       { label: "Week 2",  start: "2026-03-09", end: "2026-03-13" },
@@ -31,7 +31,7 @@ const SESSIONS = [
   },
   {
     name: "Spring 2026",
-    color: "#6ab187",
+    color: "#00adef",
     weeks: [
       { label: "Week 1",  start: "2026-07-27", end: "2026-07-31" },
       { label: "Week 2",  start: "2026-08-03", end: "2026-08-07" },
@@ -56,7 +56,7 @@ const SESSIONS = [
   },
   {
     name: "Annual 2026",
-    color: "#5b9bd5",
+    color: "#001641",
     weeks: [
       { label: "Week 1",  start: "2026-03-02", end: "2026-03-06" },
       { label: "Week 2",  start: "2026-03-09", end: "2026-03-13" },
@@ -97,7 +97,7 @@ const SESSIONS = [
   },
   {
     name: "Summer 2026/27",
-    color: "#a78bfa",
+    color: "#007ab8",
     weeks: [
       { label: "Week 1", start: "2026-11-30", end: "2026-12-04" },
       { label: "Week 2", start: "2026-12-07", end: "2026-12-11" },
@@ -116,7 +116,7 @@ const SESSIONS = [
   },
   {
     name: "Trimester 1 2026",
-    color: "#f0c040",
+    color: "#00875a",
     weeks: [
       { label: "Week 1",  start: "2026-02-09", end: "2026-02-13" },
       { label: "Week 2",  start: "2026-02-16", end: "2026-02-20" },
@@ -136,7 +136,7 @@ const SESSIONS = [
   },
   {
     name: "Trimester 2 2026",
-    color: "#f472b6",
+    color: "#6554c0",
     weeks: [
       { label: "Week 1",  start: "2026-05-18", end: "2026-05-22" },
       { label: "Week 2",  start: "2026-05-25", end: "2026-05-29" },
@@ -156,7 +156,7 @@ const SESSIONS = [
   },
   {
     name: "Trimester 3 2026",
-    color: "#f87171",
+    color: "#ff5630",
     weeks: [
       { label: "Week 1",  start: "2026-08-24", end: "2026-08-28" },
       { label: "Week 2",  start: "2026-08-31", end: "2026-09-04" },
@@ -233,6 +233,15 @@ function updateClock() {
     hour12: true
   });
 
+  // Split time from AM/PM for styled display
+  const parts = timeStr.match(/^(\d{1,2}:\d{2}:\d{2})\s*(am|pm)$/i);
+  if (parts) {
+    document.getElementById("clock").innerHTML =
+      parts[1] + '<span class="clock-ampm">' + parts[2].toUpperCase() + '</span>';
+  } else {
+    document.getElementById("clock").textContent = timeStr;
+  }
+
   const dateStr = now.toLocaleDateString("en-AU", {
     weekday: "long",
     day: "numeric",
@@ -240,7 +249,6 @@ function updateClock() {
     year: "numeric"
   });
 
-  document.getElementById("clock").textContent = timeStr;
   document.getElementById("date").textContent = dateStr;
 }
 
@@ -273,20 +281,26 @@ function renderSessions() {
     card.className = "session-card";
     card.style.setProperty("--session-color", session.color);
 
-    const dot = document.createElement("span");
-    dot.className = "dot";
+    const stripe = document.createElement("div");
+    stripe.className = "card-stripe";
+
+    const body = document.createElement("div");
+    body.className = "card-body";
 
     const name = document.createElement("span");
     name.className = "session-name";
     name.textContent = session.name;
 
-    const label = document.createElement("span");
-    label.className = status.type === "teaching" ? "session-week" : "session-period";
-    label.textContent = status.label;
+    const badge = document.createElement("span");
+    badge.className = status.type === "teaching"
+      ? "session-badge"
+      : "session-badge period";
+    badge.textContent = status.label;
 
-    card.appendChild(dot);
-    card.appendChild(name);
-    card.appendChild(label);
+    body.appendChild(name);
+    body.appendChild(badge);
+    card.appendChild(stripe);
+    card.appendChild(body);
     container.appendChild(card);
   }
 }

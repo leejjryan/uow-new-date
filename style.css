@@ -7,113 +7,158 @@
 }
 
 :root {
-  --bg: #0d0d0f;
-  --surface: #141417;
-  --border: rgba(255, 255, 255, 0.07);
-  --text-primary: #f0ede8;
-  --text-secondary: rgba(240, 237, 232, 0.45);
-  --text-tertiary: rgba(240, 237, 232, 0.25);
-  --font-display: 'Syne', sans-serif;
-  --font-mono: 'DM Mono', monospace;
+  /* UOW Primary Palette */
+  --uow-dark-blue:   #001641;
+  --uow-bright-blue: #00adef;
+  --uow-red:         #e4002b;
+  --uow-white:       #ffffff;
+  --uow-light-grey:  #f2f2f2;
+
+  /* UI tokens */
+  --bg:              var(--uow-white);
+  --surface:         var(--uow-light-grey);
+  --border:          #d8dce3;
+  --text-primary:    var(--uow-dark-blue);
+  --text-secondary:  #4a5568;
+  --text-muted:      #8a96a8;
+
+  /* Session accent colours — drawn from UOW palette */
+  --color-autumn:    #e4002b;
+  --color-spring:    #00adef;
+  --color-annual:    #001641;
+  --color-summer:    #007ab8;
+  --color-tri1:      #00875a;
+  --color-tri2:      #6554c0;
+  --color-tri3:      #ff5630;
+
+  --font: 'Montserrat', sans-serif;
 }
 
 html, body {
   height: 100%;
-  background: var(--bg);
+  background: var(--uow-white);
   color: var(--text-primary);
-  font-family: var(--font-display);
+  font-family: var(--font);
   -webkit-font-smoothing: antialiased;
 }
 
-/* ─── Grain Overlay ──────────────────────────────────────────────────────────── */
-
-.grain {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 100;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 128px;
-}
-
-/* ─── Layout ─────────────────────────────────────────────────────────────────── */
-
-main {
-  min-height: 100vh;
+body {
   display: flex;
   flex-direction: column;
-  padding: 52px 64px;
-  max-width: 1100px;
-  margin: 0 auto;
-  animation: fadeIn 0.6s ease both;
+  min-height: 100vh;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(12px); }
+/* ─── Header Bar ─────────────────────────────────────────────────────────────── */
+
+.header-bar {
+  background: var(--uow-dark-blue);
+  padding: 0 56px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.uow-wordmark {
+  font-family: var(--font);
+  font-weight: 800;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+  color: var(--uow-white);
+  text-transform: uppercase;
+}
+
+.uow-wordmark span {
+  color: var(--uow-bright-blue);
+}
+
+.header-rule {
+  width: 1px;
+  height: 24px;
+  background: rgba(255,255,255,0.25);
+  margin: 0 20px;
+}
+
+.header-subtitle {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+
+/* ─── Main Content ───────────────────────────────────────────────────────────── */
+
+main {
+  flex: 1;
+  padding: 52px 56px 40px;
+  max-width: 960px;
+  width: 100%;
+  animation: fadeUp 0.45s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ─── Header ─────────────────────────────────────────────────────────────────── */
+/* ─── Date & Time Block ──────────────────────────────────────────────────────── */
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 40px;
+.datetime-block {
+  margin-bottom: 44px;
 }
 
-.wordmark {
-  font-family: var(--font-display);
+#clock {
+  font-size: 58px;
   font-weight: 800;
-  font-size: 13px;
-  letter-spacing: 0.25em;
-  color: var(--text-tertiary);
-  text-transform: uppercase;
-  padding-top: 4px;
-}
-
-.time-block {
-  text-align: right;
-}
-
-.clock {
-  font-family: var(--font-mono);
-  font-size: 42px;
-  font-weight: 300;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  color: var(--uow-dark-blue);
   line-height: 1;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 
-.date {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 400;
+.clock-ampm {
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--text-muted);
+  margin-left: 8px;
+}
+
+#date {
+  font-size: 15px;
+  font-weight: 500;
   color: var(--text-secondary);
-  letter-spacing: 0.02em;
 }
 
-/* ─── Divider ────────────────────────────────────────────────────────────────── */
+/* ─── Accent Rule ────────────────────────────────────────────────────────────── */
 
-.divider-line {
-  width: 100%;
-  height: 1px;
-  background: var(--border);
-  margin-bottom: 40px;
+.accent-rule {
+  display: flex;
+  height: 4px;
+  margin-bottom: 44px;
+  border-radius: 2px;
+  overflow: hidden;
+  width: 72px;
 }
+
+.accent-rule .r1 { flex: 3; background: var(--uow-dark-blue); }
+.accent-rule .r2 { flex: 1; background: var(--uow-red); }
 
 /* ─── Section Label ──────────────────────────────────────────────────────────── */
 
 .section-label {
-  font-family: var(--font-mono);
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.2em;
-  color: var(--text-tertiary);
-  margin-bottom: 24px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 16px;
 }
 
 /* ─── Session Cards ──────────────────────────────────────────────────────────── */
@@ -121,24 +166,23 @@ header {
 .sessions-grid {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
 }
 
 .session-card {
   display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 18px 24px;
-  background: var(--surface);
+  align-items: stretch;
+  background: var(--uow-white);
   border: 1px solid var(--border);
-  border-left: 3px solid var(--session-color);
-  border-radius: 6px;
-  animation: slideIn 0.4s ease both;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  border-radius: 3px;
+  overflow: hidden;
+  animation: slideIn 0.35s ease both;
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
 
 .session-card:hover {
-  background: rgba(255,255,255,0.03);
+  box-shadow: 0 4px 16px rgba(0, 22, 65, 0.1);
+  transform: translateY(-1px);
 }
 
 @keyframes slideIn {
@@ -146,56 +190,87 @@ header {
   to   { opacity: 1; transform: translateX(0); }
 }
 
-.session-card:nth-child(1) { animation-delay: 0.05s; }
-.session-card:nth-child(2) { animation-delay: 0.10s; }
-.session-card:nth-child(3) { animation-delay: 0.15s; }
-.session-card:nth-child(4) { animation-delay: 0.20s; }
-.session-card:nth-child(5) { animation-delay: 0.25s; }
-.session-card:nth-child(6) { animation-delay: 0.30s; }
-.session-card:nth-child(7) { animation-delay: 0.35s; }
+.session-card:nth-child(1) { animation-delay: 0.04s; }
+.session-card:nth-child(2) { animation-delay: 0.08s; }
+.session-card:nth-child(3) { animation-delay: 0.12s; }
+.session-card:nth-child(4) { animation-delay: 0.16s; }
+.session-card:nth-child(5) { animation-delay: 0.20s; }
+.session-card:nth-child(6) { animation-delay: 0.24s; }
+.session-card:nth-child(7) { animation-delay: 0.28s; }
 
-.dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--session-color);
+.card-stripe {
+  width: 5px;
   flex-shrink: 0;
-  opacity: 0.9;
+  background: var(--session-color);
+}
+
+.card-body {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding: 15px 20px;
+  gap: 16px;
 }
 
 .session-name {
-  font-family: var(--font-display);
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--uow-dark-blue);
   flex: 1;
   letter-spacing: 0.01em;
 }
 
-.session-week {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--session-color);
-  letter-spacing: 0.04em;
-  opacity: 0.9;
+.session-badge {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 2px;
+  background: var(--session-color);
+  color: white;
+  white-space: nowrap;
 }
 
-.session-period {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 400;
+.session-badge.period {
+  background: var(--uow-light-grey);
   color: var(--text-secondary);
-  letter-spacing: 0.04em;
+  font-weight: 600;
   font-style: italic;
+  text-transform: none;
+  letter-spacing: 0.02em;
 }
 
 /* ─── No Sessions State ──────────────────────────────────────────────────────── */
 
 .no-sessions {
-  font-family: var(--font-mono);
   font-size: 14px;
-  color: var(--text-secondary);
-  padding: 32px 0;
-  letter-spacing: 0.02em;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: 40px 0;
+}
+
+/* ─── Footer ─────────────────────────────────────────────────────────────────── */
+
+footer {
+  padding: 16px 56px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--uow-red);
+  flex-shrink: 0;
+}
+
+.footer-text {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
 }
