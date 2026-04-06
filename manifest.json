@@ -1,0 +1,9 @@
+{
+  "manifest_version": 3,
+  "name": "UOW Session Dates",
+  "version": "1.0",
+  "description": "Shows active UOW session weeks on every new tab.",
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  }
+}

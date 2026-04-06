@@ -1,0 +1,201 @@
+/* ─── Reset & Base ───────────────────────────────────────────────────────────── */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #0d0d0f;
+  --surface: #141417;
+  --border: rgba(255, 255, 255, 0.07);
+  --text-primary: #f0ede8;
+  --text-secondary: rgba(240, 237, 232, 0.45);
+  --text-tertiary: rgba(240, 237, 232, 0.25);
+  --font-display: 'Syne', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+html, body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Grain Overlay ──────────────────────────────────────────────────────────── */
+
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px;
+}
+
+/* ─── Layout ─────────────────────────────────────────────────────────────────── */
+
+main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 52px 64px;
+  max-width: 1100px;
+  margin: 0 auto;
+  animation: fadeIn 0.6s ease both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────────── */
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.25em;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  padding-top: 4px;
+}
+
+.time-block {
+  text-align: right;
+}
+
+.clock {
+  font-family: var(--font-mono);
+  font-size: 42px;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.date {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+
+/* ─── Divider ────────────────────────────────────────────────────────────────── */
+
+.divider-line {
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 40px;
+}
+
+/* ─── Section Label ──────────────────────────────────────────────────────────── */
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--text-tertiary);
+  margin-bottom: 24px;
+}
+
+/* ─── Session Cards ──────────────────────────────────────────────────────────── */
+
+.sessions-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.session-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--session-color);
+  border-radius: 6px;
+  animation: slideIn 0.4s ease both;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.session-card:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.session-card:nth-child(1) { animation-delay: 0.05s; }
+.session-card:nth-child(2) { animation-delay: 0.10s; }
+.session-card:nth-child(3) { animation-delay: 0.15s; }
+.session-card:nth-child(4) { animation-delay: 0.20s; }
+.session-card:nth-child(5) { animation-delay: 0.25s; }
+.session-card:nth-child(6) { animation-delay: 0.30s; }
+.session-card:nth-child(7) { animation-delay: 0.35s; }
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--session-color);
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+.session-name {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+  letter-spacing: 0.01em;
+}
+
+.session-week {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--session-color);
+  letter-spacing: 0.04em;
+  opacity: 0.9;
+}
+
+.session-period {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+  font-style: italic;
+}
+
+/* ─── No Sessions State ──────────────────────────────────────────────────────── */
+
+.no-sessions {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text-secondary);
+  padding: 32px 0;
+  letter-spacing: 0.02em;
+}

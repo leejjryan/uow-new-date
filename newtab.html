@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UOW Session Dates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="grain"></div>
+
+  <main>
+    <header>
+      <div class="wordmark">UOW</div>
+      <div class="time-block">
+        <div id="clock" class="clock">--:--:-- --</div>
+        <div id="date" class="date">Loading...</div>
+      </div>
+    </header>
+
+    <section class="divider-line"></section>
+
+    <section class="session-section">
+      <div class="section-label">ACTIVE SESSIONS TODAY</div>
+      <div id="sessions" class="sessions-grid"></div>
+    </section>
+  </main>
+
+  <script src="newtab.js"></script>
+</body>
+</html>
