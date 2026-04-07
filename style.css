@@ -274,3 +274,98 @@ footer {
   color: var(--text-muted);
   letter-spacing: 0.04em;
 }
+
+/* ─── Two Column Layout ──────────────────────────────────────────────────────── */
+
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* ─── Key Dates List ─────────────────────────────────────────────────────────── */
+
+.key-dates-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.kd-group-header {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--uow-bright-blue);
+  padding: 12px 0 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
+}
+
+.kd-group-header:first-child {
+  padding-top: 0;
+}
+
+.kd-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  animation: slideIn 0.35s ease both;
+}
+
+.kd-row:last-child {
+  border-bottom: none;
+}
+
+.kd-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.kd-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--session-color);
+  flex-shrink: 0;
+}
+
+.kd-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.kd-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--uow-dark-blue);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kd-session {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kd-date {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
