@@ -208,6 +208,46 @@ const SESSIONS = [
     ]
   },
   {
+    name: "Graduation",
+    color: "#c9a84c",
+    weeks: [],
+    periods: [
+      { label: "Graduation Ceremonies – Wollongong Campus", start: "2026-04-20", end: "2026-04-24" },
+      { label: "Graduation Ceremony – Liverpool",           start: "2026-07-14", end: "2026-07-16" },
+      { label: "Graduation Ceremony – Wollongong Campus",  start: "2026-11-02", end: "2026-11-02" },
+    ],
+    keyDates: [
+      // Ceremonies
+      { label: "Graduation Ceremonies – Wollongong Campus",        date: "2026-04-20" },
+      { label: "May Conferral of Awards",                          date: "2026-05-29" },
+      { label: "Graduation Ceremony – Liverpool",                  date: "2026-07-14" },
+      { label: "July Conferral of Awards",                         date: "2026-07-24" },
+      { label: "September Conferral of Awards",                    date: "2026-09-25" },
+      { label: "Graduation Ceremony – Wollongong Campus",          date: "2026-11-02" },
+      { label: "December Conferral of Awards",                     date: "2026-12-18" },
+      // Conferral – Course requirements deadlines
+      { label: "Conferral – Course requirements deadline",         date: "2026-05-15" },
+      { label: "Conferral – Course requirements deadline",         date: "2026-07-10" },
+      { label: "Conferral – Course requirements deadline",         date: "2026-09-11" },
+      { label: "Conferral – Course requirements deadline",         date: "2026-12-04" },
+      // Students notified of inclusion
+      { label: "Conferral – Students notified of inclusion",       date: "2026-05-22" },
+      { label: "Conferral – Students notified of inclusion (SOLS)",date: "2026-07-17" },
+      { label: "Conferral – Students notified of inclusion",       date: "2026-09-18" },
+      { label: "Conferral – Students notified of inclusion (SOLS)",date: "2026-12-11" },
+      // Digital documents published to MyEquals
+      { label: "Conferral – Digital documents to MyEquals",        date: "2026-06-03" },
+      { label: "Conferral – Digital documents to MyEquals",        date: "2026-07-29" },
+      { label: "Conferral – Digital documents to MyEquals",        date: "2026-09-30" },
+      { label: "Conferral – Digital documents to MyEquals",        date: "2026-12-22" },
+      // Hardcopy documents received
+      { label: "Conferral – Hardcopy documents received",          date: "2026-06-26" },
+      { label: "Conferral – Hardcopy documents received",          date: "2026-08-31" },
+      { label: "Conferral – Hardcopy documents received",          date: "2026-10-23" },
+      { label: "Conferral – Hardcopy documents received",          date: "2027-01-30" },
+    ]
+  },
+  {
     name: "Trimester 3 2026",
     color: "#ff5630",
     weeks: [
@@ -290,6 +330,9 @@ function getSessionStatus(session, today) {
       return { type: "period", label: period.label };
     }
   }
+  // For sessions with no weeks (e.g. Graduation), check if today is near any period
+  if (session.weeks.length === 0) return null;
+
   const firstDay = toDateObj(session.weeks[0].start);
   const lastPeriod = session.periods[session.periods.length - 1];
   const lastDay = toDateObj(lastPeriod ? lastPeriod.end : session.weeks[session.weeks.length - 1].end);
@@ -342,19 +385,23 @@ function getUpcomingKeyDates(today) {
 
 function updateClock() {
   const now = new Date();
-  const timeStr = now.toLocaleTimeString("en-AU", {
-    hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true
-  });
-  const parts = timeStr.match(/^(\d{1,2}:\d{2}:\d{2})\s*(am|pm)$/i);
-  if (parts) {
-    document.getElementById("clock").innerHTML =
-      parts[1] + '<span class="clock-ampm">' + parts[2].toUpperCase() + '</span>';
-  } else {
-    document.getElementById("clock").textContent = timeStr;
-  }
-  document.getElementById("date").textContent = now.toLocaleDateString("en-AU", {
-    weekday: "long", day: "numeric", month: "long", year: "numeric"
-  });
+
+  // Build time manually to avoid locale formatting issues in Chrome extensions
+  const h = now.getHours();
+  const m = now.getMinutes();
+  const s = now.getSeconds();
+  const ampm = h >= 12 ? "PM" : "AM";
+  const h12 = h % 12 || 12;
+  const pad = n => String(n).padStart(2, "0");
+  const timeStr = `${pad(h12)}:${pad(m)}:${pad(s)}`;
+
+  document.getElementById("clock").innerHTML =
+    timeStr + '<span class="clock-ampm">' + ampm + '</span>';
+
+  const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  document.getElementById("date").textContent =
+    `${days[now.getDay()]} ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
 }
 
 // ─── Render Active Sessions ───────────────────────────────────────────────────

@@ -1,9 +1,12 @@
 {
   "manifest_version": 3,
   "name": "UOW Session Dates",
-  "version": "1.0",
-  "description": "Shows active UOW session weeks on every new tab.",
+  "version": "1.1",
+  "description": "Shows active UOW session weeks and key dates on every new tab.",
   "chrome_url_overrides": {
     "newtab": "newtab.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self'"
   }
 }
